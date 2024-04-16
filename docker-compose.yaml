@@ -3,12 +3,14 @@ version: ‘3’
 services:
   web:
     build: .
+    tty: True
     ports:
-      - '8001:8000'
+      - '8000:80'
     depends_on:
       - redis
 
   redis:
     image: redis
+    tty: True
     ports:
       - '6379:6379'
