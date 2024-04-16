@@ -3,8 +3,11 @@ import os
 from typing import Optional
 
 import redis
+from dotenv import load_dotenv
 
-r = redis.Redis(host='localhost', port=6379, decode_responses=True)
+load_dotenv()
+
+r = redis.Redis(host=os.getenv('HOST'), port=os.getenv('PORT'), decode_responses=True)
 
 
 def get_hashed_passphrase(passphrase: str) -> str:
