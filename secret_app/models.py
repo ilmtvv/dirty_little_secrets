@@ -10,4 +10,7 @@ class SecretOutput(BaseModel):
 class SecretInput(BaseModel):
     secret: str
     passphrase: str
-    ttl: Optional[int] = 3600   # Time to live in seconds
+
+
+class SecretPayload(BaseModel):
+    passphrase: str
