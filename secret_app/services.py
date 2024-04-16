@@ -11,10 +11,21 @@ r = redis.Redis(host=os.getenv('HOST'), port=os.getenv('PORT'), decode_responses
 
 
 def get_hashed_passphrase(passphrase: str) -> str:
+    """
+    create hash
+    :param passphrase:
+    :return: hash
+    """
     return hashlib.sha256(passphrase.encode()).hexdigest()
 
 
 def save_secret(secret: str, hashed_passphrase: str) -> str:
+    """
+    save secret in db
+    :param secret:
+    :param hashed_passphrase:
+    :return: secret_key
+    """
     secret_key = hashlib.sha256(os.urandom(32)).hexdigest()
 
     r.hset(secret_key, mapping={
@@ -26,6 +37,11 @@ def save_secret(secret: str, hashed_passphrase: str) -> str:
 
 
 def get_and_delete_secret(secret_key: str) -> Optional[str]:
+    """
+    get and delete secret
+    :param secret_key:
+    :return: secret
+    """
     secret_data = r.hgetall(secret_key)
     if secret_data == {}:
         return None

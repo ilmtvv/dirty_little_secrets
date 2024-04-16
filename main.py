@@ -3,7 +3,8 @@ from fastapi import FastAPI, HTTPException
 from secret_app.models import SecretOutput, SecretInput, SecretPayload
 from secret_app.services import get_hashed_passphrase, save_secret, get_and_delete_secret
 
-app = FastAPI()
+
+app = FastAPI()     # app for manager of secrets
 
 
 @app.post('/generate', response_model=SecretOutput)
