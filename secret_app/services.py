@@ -19,19 +19,23 @@ def get_hashed_passphrase(passphrase: str) -> str:
     return hashlib.sha256(passphrase.encode()).hexdigest()
 
 
-def save_secret(secret: str, hashed_passphrase: str) -> str:
+def save_secret(secret: str, hashed_passphrase: str, tll: int) -> str:
     """
     save secret in db
     :param secret:
     :param hashed_passphrase:
-    :return: secret_key
+    :param tll:
+    :return: secret_key:
     """
     secret_key = hashlib.sha256(os.urandom(32)).hexdigest()
 
     r.hset(secret_key, mapping={
         'secret': secret,
         'hashed_passphrase': hashed_passphrase,
+        'tll': tll * 3600 * 24,
     })
+
+    r.expire(secret_key, tll)
 
     return secret_key
 

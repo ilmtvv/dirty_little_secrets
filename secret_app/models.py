@@ -6,8 +6,12 @@ class SecretOutput(BaseModel):
 
 
 class SecretInput(BaseModel):
+    """
+    tll_day it's Time To Live, expiration time
+    """
     secret: str
     passphrase: str
+    ttl_day: int
 
 
 class SecretPayload(BaseModel):

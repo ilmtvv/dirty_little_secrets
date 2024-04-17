@@ -1,6 +1,14 @@
 version: ‘3’
 
 services:
+  redis:
+    image: redis
+    tty: True
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-data:/data
+
   web:
     build: .
     tty: True
@@ -9,8 +17,5 @@ services:
     depends_on:
       - redis
 
-  redis:
-    image: redis
-    tty: True
-    ports:
-      - '6379:6379'
+volumes:
+  redis-data:

@@ -10,7 +10,7 @@ app = FastAPI()     # app for manager of secrets
 @app.post('/generate', response_model=SecretOutput)
 def generate_secret(secret_input: SecretInput):
     hashed_passphrase = get_hashed_passphrase(secret_input.passphrase)
-    secret_key = save_secret(secret_input.secret, hashed_passphrase)
+    secret_key = save_secret(secret_input.secret, hashed_passphrase, secret_input.ttl_day)
     return {'secret_key': secret_key}
 
 
