@@ -1,10 +1,9 @@
-Name                       Stmts   Miss  Cover
-----------------------------------------------
-main.py                       15      0   100%
-secret_app\__init__.py         0      0   100%
-secret_app\models.py           9      0   100%
-secret_app\services.py        20      0   100%
-secret_app\test_redis.py       8      0   100%
-test_main.py                  11      0   100%
-----------------------------------------------
-TOTAL                         63      0   100%
+Name                     Stmts   Miss  Cover
+--------------------------------------------
+main.py                     15      0   100%
+secret_app\__init__.py       0      0   100%
+secret_app\models.py         9      0   100%
+secret_app\services.py      20      0   100%
+test_main.py                11      0   100%
+--------------------------------------------
+TOTAL                       55      0   100%
