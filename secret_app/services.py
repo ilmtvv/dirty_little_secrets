@@ -24,20 +24,11 @@ r = redis.Redis(host=os.getenv('HOST'), port=os.getenv('PORT'), decode_responses
 #     print("Failed to connect to Redis")
 
 
-def get_hashed_passphrase(passphrase: str) -> str:
-    """
-    create hash
-    :param passphrase:
-    :return: hash
-    """
-    return hashlib.sha256(passphrase.encode()).hexdigest()
-
-
-def save_secret(secret: str, hashed_passphrase: str, tll: int) -> str:
+def save_secret(secret: str, pass_phrase: str, tll: int) -> str:
     """
     save secret in db
     :param secret:
-    :param hashed_passphrase:
+    :param pass_phrase:
     :param tll:
     :return: secret_key:
     """
@@ -45,7 +36,7 @@ def save_secret(secret: str, hashed_passphrase: str, tll: int) -> str:
 
     r.hset(secret_key, mapping={
         'secret': secret,
-        'hashed_passphrase': hashed_passphrase,
+        'passphrase': pass_phrase,
     })
 
     tll = tll * 3600 * 24
@@ -54,14 +45,15 @@ def save_secret(secret: str, hashed_passphrase: str, tll: int) -> str:
     return secret_key
 
 
-def get_and_delete_secret(secret_key: str, passphrase: str) -> Optional[str]:
+def get_and_delete_secret(secret_key: str, pass_phrase: str) -> Optional[str]:
     """
     get and delete secret
+    :param pass_phrase:
     :param secret_key:
     :return: secret
     """
     secret_data = r.hgetall(secret_key)
-    if secret_data == {} or secret_data['passphrase'] == get_hashed_passphrase(passphrase):
+    if secret_data == {} or secret_data['passphrase'] != pass_phrase:
         return None
     r.delete(secret_key)
     return secret_data['secret']

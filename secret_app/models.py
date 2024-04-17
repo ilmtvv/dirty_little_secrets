@@ -10,7 +10,7 @@ class SecretInput(BaseModel):
     tll_day it's Time To Live, expiration time, default=1
     """
     secret: str
-    passphrase: str
+    pass_phrase: str
     ttl_day: int = 1
 
 
@@ -18,5 +18,5 @@ class SecretOutput(BaseModel):
     secret: str
 
 
-class Passphrase(BaseModel):
-    passphrase: str
+class PassPhraseInput(BaseModel):
+    pass_phrase: str
