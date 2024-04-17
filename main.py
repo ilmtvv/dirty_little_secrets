@@ -15,7 +15,7 @@ def generate_secret(secret_input: SecretInput):
 
 
 @app.post('/secrets/{secret_key}', response_model=SecretPayload)
-def get_secret(secret_key: str):
+async def get_secret(secret_key: str):
     secret = get_and_delete_secret(secret_key)
     if secret is None:
         raise HTTPException(status_code=404, detail='Secret not found or passphrase incorrect')
