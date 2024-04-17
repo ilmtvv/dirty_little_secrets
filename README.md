@@ -10,3 +10,13 @@ It should allow you to create a secret, set a passphrase to open it, and generat
 ```
 docker-compose up --build
 ```
+
+# PEP
+```
+flake8
+```
+
+# Test
+```
+pytest
+```
