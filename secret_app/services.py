@@ -33,9 +33,9 @@ def save_secret(secret: str, hashed_passphrase: str, tll: int) -> str:
     r.hset(secret_key, mapping={
         'secret': secret,
         'hashed_passphrase': hashed_passphrase,
-        'tll': tll * 3600 * 24,
     })
 
+    tll = tll * 3600 * 24
     r.expire(secret_key, tll)
 
     return secret_key
