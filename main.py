@@ -28,5 +28,5 @@ async def get_secret(secret_phrase: PassPhraseInput, secret_key: str):
     """
     secret = get_and_delete_secret(secret_key, secret_phrase.pass_phrase)
     if secret is None:
-        raise HTTPException(status_code=404, detail='Secret not found or passphrase incorrect')
+        raise HTTPException(status_code=404, detail='Secret not found or pass phrase incorrect')
     return {'secret': secret}
