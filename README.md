@@ -6,6 +6,11 @@ It should allow you to create a secret, set a passphrase to open it, and generat
 - FastAPI
 - Redis
 
+# Docs
+```
+host + port + /docs -> swagger
+```
+
 # Run
 ```
 docker-compose up --build
