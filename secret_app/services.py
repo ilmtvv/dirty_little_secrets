@@ -8,7 +8,20 @@ from dotenv import load_dotenv
 load_dotenv()
 
 r = redis.Redis(host=os.getenv('HOST'), port=os.getenv('PORT'), decode_responses=True)  # Snapshotting (RDB) on,
-# auto-decode on
+# auto-decode on and without password
+
+# # connect to db with password and db #
+# r = redis.Redis(host=os.getenv('HOST'), port=os.getenv('PORT'), password=None, db=os.getenv('DB'))
+# r.config_set('requirepass', os.getenv('PASSWORD'))
+# r.close()
+#
+# r = redis.Redis(host=os.getenv('HOST'), port=os.getenv('PORT'), password=os.getenv('PASSWORD'), decode_responses=True)
+#
+# try:
+#     response = r.ping()
+#     print(f"Connected to Redis: {response}")
+# except redis.ConnectionError:
+#     print("Failed to connect to Redis")
 
 
 def get_hashed_passphrase(passphrase: str) -> str:
