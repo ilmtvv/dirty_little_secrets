@@ -54,14 +54,14 @@ def save_secret(secret: str, hashed_passphrase: str, tll: int) -> str:
     return secret_key
 
 
-def get_and_delete_secret(secret_key: str) -> Optional[str]:
+def get_and_delete_secret(secret_key: str, passphrase: str) -> Optional[str]:
     """
     get and delete secret
     :param secret_key:
     :return: secret
     """
     secret_data = r.hgetall(secret_key)
-    if secret_data == {}:
+    if secret_data == {} or secret_data['passphrase'] == get_hashed_passphrase(passphrase):
         return None
     r.delete(secret_key)
     return secret_data['secret']

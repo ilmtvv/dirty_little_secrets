@@ -1,13 +1,13 @@
 from fastapi import FastAPI, HTTPException
 
-from secret_app.models import SecretOutput, SecretInput, SecretPayload
+from secret_app.models import SecretKeyOutput, SecretInput, SecretOutput, Passphrase
 from secret_app.services import get_hashed_passphrase, save_secret, get_and_delete_secret
 
 
 app = FastAPI()     # app for manager of secrets
 
 
-@app.post('/generate', response_model=SecretOutput)
+@app.post('/generate', response_model=SecretKeyOutput)
 def generate_secret(secret_input: SecretInput):
     """
     url for generate secret
@@ -19,14 +19,15 @@ def generate_secret(secret_input: SecretInput):
     return {'secret_key': secret_key}
 
 
-@app.post('/secrets/{secret_key}', response_model=SecretPayload)
-async def get_secret(secret_key: str):
+@app.post('/secrets/{secret_key}', response_model=SecretOutput)
+async def get_secret(secret_phrase: Passphrase, secret_key: str):
     """
     url for get secret
+    :param secret_phrase:
     :param secret_key:
     :return:
     """
-    secret = get_and_delete_secret(secret_key)
+    secret = get_and_delete_secret(secret_key, secret_phrase.passphrase)
     if secret is None:
         raise HTTPException(status_code=404, detail='Secret not found or passphrase incorrect')
-    return {'passphrase': secret}
+    return {'secret': secret}

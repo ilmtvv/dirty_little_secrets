@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class SecretOutput(BaseModel):
+class SecretKeyOutput(BaseModel):
     secret_key: str
 
 
@@ -14,5 +14,9 @@ class SecretInput(BaseModel):
     ttl_day: int = 1
 
 
-class SecretPayload(BaseModel):
+class SecretOutput(BaseModel):
+    secret: str
+
+
+class Passphrase(BaseModel):
     passphrase: str
