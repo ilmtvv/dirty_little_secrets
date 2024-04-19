@@ -1,9 +1,0 @@
-Name                     Stmts   Miss  Cover
---------------------------------------------
-main.py                     14      0   100%
-secret_app\__init__.py       0      0   100%
-secret_app\models.py        11      0   100%
-secret_app\services.py      19      0   100%
-test_main.py                12      0   100%
---------------------------------------------
-TOTAL                       56      0   100%
