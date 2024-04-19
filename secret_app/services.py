@@ -1,6 +1,7 @@
 import hashlib
 import os
 from typing import Optional
+from cryptography.fernet import Fernet
 
 import redis
 from dotenv import load_dotenv
@@ -34,9 +35,12 @@ def save_secret(secret: str, pass_phrase: str, tll: int) -> str:
     """
     secret_key = hashlib.sha256(os.urandom(32)).hexdigest()
 
+    key = Fernet.generate_key()
+
+    r.set(secret_key[::-1], key)
     r.hset(secret_key, mapping={
-        'secret': secret,
-        'passphrase': pass_phrase,
+        'secret': Fernet(key).encrypt(secret.encode()),
+        'pass_phrase': Fernet(key).encrypt(pass_phrase.encode()),
     })
 
     tll = tll * 3600 * 24
@@ -53,7 +57,12 @@ def get_and_delete_secret(secret_key: str, pass_phrase: str) -> Optional[str]:
     :return: secret
     """
     secret_data = r.hgetall(secret_key)
-    if secret_data == {} or secret_data['passphrase'] != pass_phrase:
+    key = r.get(secret_key[::-1])
+
+    if secret_data == {}:
         return None
+    elif pass_phrase != Fernet(key).decrypt(secret_data['pass_phrase']).decode():
+        return 'WRONG!'
     r.delete(secret_key)
-    return secret_data['secret']
+    r.delete(secret_key[::-1])
+    return Fernet(key).decrypt(secret_data['secret']).decode()
