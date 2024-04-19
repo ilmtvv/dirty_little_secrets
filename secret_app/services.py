@@ -59,10 +59,10 @@ def get_and_delete_secret(secret_key: str, pass_phrase: str) -> Optional[str]:
     secret_data = r.hgetall(secret_key)
     key = r.get(secret_key[::-1])
 
-    if secret_data == {}:
+    if secret_data == {} or key == {}:
         return None
     elif pass_phrase != Fernet(key).decrypt(secret_data['pass_phrase']).decode():
-        return 'WRONG!'
+        return None
     r.delete(secret_key)
     r.delete(secret_key[::-1])
     return Fernet(key).decrypt(secret_data['secret']).decode()

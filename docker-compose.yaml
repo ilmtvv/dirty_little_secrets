@@ -20,6 +20,8 @@ services:
       - redis
     networks:
       - custom
+    env_file:
+      - ./.env.docker
 
 volumes:
   redis-data:
