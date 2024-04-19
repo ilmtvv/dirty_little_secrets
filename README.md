@@ -12,6 +12,7 @@ host + port + /docs -> swagger
 ```
 
 # Run
+Rename or copy and paste .env.docker and install name file like .env! If you want a custom run overwrite .env!
 ```
 docker-compose up --build
 ```

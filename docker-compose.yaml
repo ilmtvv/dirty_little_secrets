@@ -8,6 +8,8 @@ services:
       - '6379:6379'
     volumes:
       - redis-data:/data
+    networks:
+      - custom
 
   web:
     build: .
@@ -16,6 +18,12 @@ services:
       - '8000:80'
     depends_on:
       - redis
+    networks:
+      - custom
 
 volumes:
   redis-data:
+
+networks:
+  custom:
+    driver: bridge

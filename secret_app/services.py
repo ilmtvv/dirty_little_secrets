@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-r = redis.Redis(host=os.getenv('HOST'), port=os.getenv('PORT'), decode_responses=True)  # Snapshotting (RDB) on,
+r = redis.Redis(host=os.getenv('HOST'), port=os.getenv('PORT'), db=0, decode_responses=True)  # Snapshotting (RDB) on,
 # auto-decode on and without password
 
 # # connect to db with password and db #
